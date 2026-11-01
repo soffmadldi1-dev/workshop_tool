@@ -1,0 +1,1631 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>중동 상품화 워크숍 프롬프트 메이커</title>
+<meta name="description" content="오늘 만든 상품 아이디어를 AI로 기획서·제안서·보관용 문서까지 — 2026 알람아라비코리아 하반기 2차 세미나 부산 중동 타깃 연계 상품화 워크숍">
+<meta name="theme-color" content="#0A7281">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --accent:#0A7281;
+  --accent-ink:#075a66;
+  --accent-weak:#e8f2f3;
+  --accent-line:#b9d6da;
+  --ink:#1c2226;
+  --ink-2:#3b454c;
+  --muted:#66727b;
+  --line:#dde2e5;
+  --bg:#f4f6f7;
+  --card:#ffffff;
+  --radius:14px;
+  --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+  font-size:16px;line-height:1.6;
+  word-break:keep-all;overflow-wrap:break-word;
+}
+button,input,textarea{font-family:inherit}
+h1,h2,h3,h4,p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* ---------- Header ---------- */
+.top{background:var(--card);border-bottom:1px solid var(--line)}
+.top .wrap{padding-top:20px;padding-bottom:18px}
+.eyebrow{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:-.01em}
+.top h1{font-size:22px;line-height:1.35;margin-top:4px;letter-spacing:-.02em}
+.top .sub{font-size:15px;color:var(--muted);margin-top:4px}
+
+/* ---------- Mobile step bar ---------- */
+.stepbar{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.stepbar ol{list-style:none;margin:0 auto;padding:8px 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:1180px}
+.stepbar button{
+  width:100%;min-height:52px;border:0;background:none;border-radius:10px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  color:var(--muted);font-size:12px;line-height:1.25;padding:4px 2px;
+}
+.stepbar .n{
+  width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;
+  font-size:12px;font-weight:700;background:#fff;color:var(--muted)
+}
+.stepbar button.done .n{border-color:var(--accent-line);color:var(--accent)}
+.stepbar button.on{color:var(--accent);font-weight:700}
+.stepbar button.on .n{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ---------- Layout ---------- */
+.layout{display:block;padding-top:16px;padding-bottom:110px}
+.side{display:none}
+main{min-width:0}
+
+@media (min-width:960px){
+  .stepbar{display:none}
+  .layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:28px;padding-top:28px;padding-bottom:48px}
+  .side{display:block}
+  .side-inner{position:sticky;top:20px}
+  .top h1{font-size:28px}
+}
+.side-steps{list-style:none;margin:0;padding:8px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.side-steps button{
+  width:100%;min-height:52px;display:flex;align-items:center;gap:12px;text-align:left;
+  padding:8px 10px;border:0;background:none;border-radius:10px;cursor:pointer;color:var(--ink-2);font-size:15px
+}
+.side-steps button:hover{background:var(--bg)}
+.side-steps .n{
+  flex:0 0 28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;
+  font-size:13px;font-weight:700;color:var(--muted);background:#fff
+}
+.side-steps small{display:block;color:var(--muted);font-size:12px;line-height:1.35}
+.side-steps button.on{background:var(--accent-weak);color:var(--accent-ink);font-weight:700}
+.side-steps button.on .n{background:var(--accent);border-color:var(--accent);color:#fff}
+.side-steps button.done .n{border-color:var(--accent-line);color:var(--accent)}
+.side-meter{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.side-meter p{font-size:13px;color:var(--muted)}
+.side-meter strong{font-size:22px;color:var(--accent)}
+.side-reset{margin-top:12px;width:100%}
+
+/* ---------- Cards & fields ---------- */
+.step{display:none}
+.step.on{display:block}
+.step-head{margin-bottom:14px}
+.step-head .k{font-size:13px;font-weight:700;color:var(--accent)}
+.step-head h2{font-size:22px;line-height:1.35;letter-spacing:-.02em;margin-top:2px}
+.step-head p{color:var(--muted);font-size:15px;margin-top:4px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;margin-bottom:14px}
+@media (min-width:600px){.card{padding:22px 24px}}
+.card h3{font-size:17px;line-height:1.4;letter-spacing:-.01em;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card h3 .tag{font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.card .lead{font-size:14px;color:var(--muted);margin:-6px 0 12px}
+
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label,.field .label{display:block;font-weight:600;font-size:15px;margin-bottom:6px;color:var(--ink)}
+.field .opt{font-weight:500;color:var(--muted);font-size:13px;margin-left:4px}
+.field .hint{font-size:13px;color:var(--muted);margin-top:6px}
+input[type=text],textarea{
+  width:100%;font-size:16px;line-height:1.5;color:var(--ink);background:#fff;
+  border:1px solid #cfd6da;border-radius:10px;padding:11px 12px;min-height:46px;
+  transition:border-color .15s, box-shadow .15s;
+}
+textarea{resize:vertical;min-height:84px;display:block}
+input[type=text]::placeholder,textarea::placeholder{color:#9aa4ab}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(10,114,129,.15)}
+.stack > * + *{margin-top:8px}
+.num-input{display:flex;gap:8px;align-items:flex-start}
+.num-input .no{flex:0 0 28px;height:46px;display:grid;place-items:center;font-weight:700;color:var(--muted);font-size:14px}
+.num-input input{flex:1;min-width:0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid rgba(0,0,0,.12);vertical-align:middle}
+.dot.y{background:#f6dc6a}.dot.p{background:#f3b6c7}
+
+/* choice buttons */
+.choices{display:grid;gap:8px}
+.choices.team{grid-template-columns:1fr}
+@media (min-width:600px){.choices.team{grid-template-columns:repeat(3,1fr)}}
+.choices.role{grid-template-columns:repeat(3,1fr)}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice span{
+  display:flex;flex-direction:column;justify-content:center;min-height:52px;height:100%;
+  border:1.5px solid #cfd6da;border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff;
+  font-size:15px;line-height:1.35;color:var(--ink-2)
+}
+.choice span b{font-size:16px;color:var(--ink)}
+.choice span small{font-size:13px;color:var(--muted);margin-top:2px}
+.choices.role .choice span{align-items:center;text-align:center;padding:8px 6px}
+.choice input:checked + span{border-color:var(--accent);background:var(--accent-weak);color:var(--accent-ink)}
+.choice input:checked + span b{color:var(--accent-ink)}
+.choice input:focus-visible + span{box-shadow:0 0 0 3px rgba(10,114,129,.25)}
+
+.team-info{margin-top:14px;border:1px solid var(--accent-line);background:var(--accent-weak);border-radius:12px;padding:14px}
+.team-info.empty{background:var(--bg);border-color:var(--line);color:var(--muted);font-size:14px}
+.team-info dl{margin:0;display:grid;grid-template-columns:76px minmax(0,1fr);gap:6px 10px;font-size:15px}
+.team-info dt{color:var(--accent-ink);font-weight:700;font-size:14px;padding-top:1px}
+.team-info dd{margin:0;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{
+  min-height:44px;border:1px solid #cfd6da;border-radius:999px;background:#fff;padding:6px 14px;
+  font-size:14px;cursor:pointer;color:var(--ink-2)
+}
+.chip:hover{border-color:var(--accent)}
+.chip.on{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-weak);font-weight:600}
+
+.checks{display:grid;gap:8px}
+@media (min-width:600px){.checks{grid-template-columns:repeat(2,1fr)}}
+.check{display:flex;gap:10px;align-items:flex-start;min-height:48px;border:1px solid #cfd6da;border-radius:10px;padding:11px 12px;cursor:pointer;background:#fff}
+.field label.check{display:flex;margin:0;font-weight:400}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent);flex:0 0 auto}
+.check b{font-size:15px}
+.check small{display:block;color:var(--muted);font-size:13px}
+.check:has(input:checked){border-color:var(--accent);background:var(--accent-weak)}
+.mcount{margin-top:10px;font-size:14px;color:var(--ink-2);background:var(--bg);border-radius:10px;padding:8px 12px}
+.mcount b{color:var(--accent)}
+
+.notice{border-left:3px solid var(--accent);background:var(--card);border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:14px;font-size:14px;color:var(--ink-2)}
+.notice b{color:var(--ink)}
+.notice ul{margin:6px 0 0;padding-left:18px}
+.notice li + li{margin-top:2px}
+.notice .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+.days .field label{display:flex;align-items:center;gap:6px}
+.days .field label .d{display:inline-grid;place-items:center;min-width:46px;height:24px;border-radius:6px;background:var(--accent-weak);color:var(--accent-ink);font-size:13px;font-weight:700;padding:0 6px}
+
+/* ---------- Buttons ---------- */
+.btn{
+  min-height:46px;border-radius:10px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+  font-size:16px;font-weight:600;padding:10px 18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  line-height:1.3;text-align:center
+}
+.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.btn.ghost{background:#fff;color:var(--accent-ink)}
+.btn.ghost:hover{background:var(--accent-weak)}
+.btn.plain{background:#fff;color:var(--ink-2);border-color:#cfd6da}
+.btn.plain:hover{border-color:var(--ink-2);background:#fff}
+.btn.sm{min-height:44px;font-size:15px;padding:8px 14px}
+.btn[disabled]{opacity:.4;cursor:default}
+
+.navbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+}
+.navbar .in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:8px}
+.navbar .btn{width:100%}
+@media (min-width:960px){
+  .navbar{position:static;background:none;border:0;padding:6px 0 0}
+  .navbar .in{display:flex;justify-content:space-between}
+  .navbar .btn{width:auto;min-width:160px}
+}
+
+/* ---------- Step 5 ---------- */
+.meter{display:flex;align-items:center;gap:14px}
+.meter .pct{font-size:30px;font-weight:800;color:var(--accent);line-height:1;flex:0 0 auto}
+.meter .bar{flex:1;height:10px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.meter .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.cells{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px}
+@media (min-width:600px){.cells{grid-template-columns:repeat(6,1fr)}}
+.cell{border:1px solid var(--line);border-radius:10px;padding:8px;font-size:13px;line-height:1.35;text-align:center;color:var(--muted);background:#fff}
+.cell b{display:block;font-size:14px;color:var(--ink-2)}
+.cell.full{border-color:var(--accent);background:var(--accent-weak);color:var(--accent-ink)}
+.cell.full b{color:var(--accent-ink)}
+.cell.part{border-color:var(--accent-line)}
+.meter-note{font-size:13px;color:var(--muted);margin-top:10px}
+
+.howto ol{margin:0;padding-left:20px}
+.howto li{margin:4px 0}
+.howto .flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 12px;font-weight:700;color:var(--accent-ink)}
+.howto .flow span{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:15px}
+.howto .flow em{font-style:normal;color:var(--muted)}
+.photo-tip{margin-top:12px;background:var(--bg);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--ink-2)}
+
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:14px;overflow:hidden}
+.pcard .ph{display:flex;gap:12px;align-items:flex-start;padding:16px 16px 0}
+@media (min-width:600px){.pcard .ph{padding:20px 22px 0}}
+.pcard .pno{flex:0 0 40px;height:40px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+.pcard h3{font-size:17px;line-height:1.4}
+.pcard .use{font-size:14px;color:var(--muted);margin-top:2px}
+.pcard .pb{padding:12px 16px 16px}
+@media (min-width:600px){.pcard .pb{padding:12px 22px 20px}}
+.pcard .tip{font-size:14px;color:var(--ink-2);background:var(--accent-weak);border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.pcard pre{
+  margin:0;max-height:220px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:12px;font-family:var(--font);font-size:13.5px;line-height:1.55;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere;color:var(--ink-2)
+}
+.pcard pre.open{max-height:none}
+.pcard .acts{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:10px}
+.pcard .len{font-size:12px;color:var(--muted);margin-top:6px}
+
+.keep .row{display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:600px){.keep .row{grid-template-columns:1fr 1fr}}
+.warn{font-size:14px;color:var(--ink-2);background:var(--bg);border:1px dashed #c5cdd2;border-radius:10px;padding:10px 12px;margin-bottom:14px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;text-align:center;padding:18px 16px calc(96px + env(safe-area-inset-bottom))}
+@media (min-width:960px){footer{padding-bottom:18px}}
+
+/* ---------- Modal & toast ---------- */
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(20,26,30,.48)}
+.modal.on{display:flex}
+.modal .box{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.2);max-height:calc(100vh - 32px);overflow:auto}
+.modal h3{font-size:19px;margin-bottom:8px}
+.modal p{font-size:15px;color:var(--ink-2)}
+.modal .row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.modal textarea{min-height:180px;margin-top:10px}
+.toast{
+  position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(10px);z-index:60;
+  background:#1c2226;color:#fff;font-size:15px;padding:10px 16px;border-radius:10px;opacity:0;pointer-events:none;
+  transition:opacity .2s, transform .2s;max-width:calc(100vw - 32px);text-align:center
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (min-width:960px){.toast{bottom:28px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">2026. 11. 2.(월) · 부산 북항친수공원 세미나실</p>
+    <h1>중동 상품화 워크숍 프롬프트 메이커</h1>
+    <p class="sub">오늘 만든 상품 아이디어를 AI로 기획서·제안서·보관용 문서까지</p>
+  </div>
+</header>
+
+<nav class="stepbar" aria-label="진행 단계">
+  <ol id="stepbar"></ol>
+</nav>
+
+<div class="layout wrap">
+  <aside class="side" aria-label="진행 단계">
+    <div class="side-inner">
+      <ol class="side-steps" id="sidesteps"></ol>
+      <div class="side-meter">
+        <p>결과판 입력 완성도</p>
+        <strong id="sidePct">0%</strong>
+      </div>
+      <button type="button" class="btn plain side-reset" data-reset>처음부터 다시 시작</button>
+    </div>
+  </aside>
+
+  <main id="main">
+
+    <!-- STEP 1 -->
+    <section class="step" data-step="1" aria-labelledby="h-s1">
+      <div class="step-head">
+        <p class="k">STEP 1</p>
+        <h2 id="h-s1">우리 조·내 회사</h2>
+        <p>조를 고르면 테마·타깃·조 구성·기획 과제·가상 고객이 자동으로 채워집니다.</p>
+      </div>
+
+      <div class="notice">
+        이 페이지는 AI를 직접 부르지 않습니다. 입력을 마치면 <b>Claude 같은 AI 채팅창에 붙여넣을 프롬프트 4종</b>이 만들어집니다.
+        입력 내용은 이 기기 브라우저에만 저장되고, 새로고침해도 남아 있습니다.
+      </div>
+
+      <div class="card">
+        <h3>우리 조 선택</h3>
+        <div class="choices team" role="radiogroup" aria-label="조 선택" id="teamChoices"></div>
+        <div class="team-info empty" id="teamInfo">조를 선택하면 조 정보가 여기에 표시됩니다.</div>
+      </div>
+
+      <div class="card">
+        <h3>내 회사</h3>
+        <div class="field">
+          <label for="f-company">내 회사명</label>
+          <input type="text" id="f-company" data-k="company" autocomplete="organization">
+          <div class="chips" id="memberChips" aria-label="조 구성 회사 빠른 선택"></div>
+          <p class="hint" id="chipHint">조를 선택하면 조 구성 회사를 눌러 바로 입력할 수 있습니다.</p>
+        </div>
+        <div class="field">
+          <span class="label" id="l-role">내 역할</span>
+          <div class="choices role" role="radiogroup" aria-labelledby="l-role">
+            <label class="choice"><input type="radio" name="role" value="A" data-radio="role"><span><b>A</b>핵심 체험</span></label>
+            <label class="choice"><input type="radio" name="role" value="B" data-radio="role"><span><b>B</b>숙박</span></label>
+            <label class="choice"><input type="radio" name="role" value="C" data-radio="role"><span><b>C</b>판매·응대</span></label>
+          </div>
+          <p class="hint">A 핵심 체험: 의료·뷰티·웰니스·문화 / B 숙박 / C 판매·응대: 컨시어지·여행사</p>
+        </div>
+        <div class="field">
+          <label for="f-job">담당 직무<span class="opt">선택</span></label>
+          <input type="text" id="f-job" data-k="job">
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step" data-step="2" aria-labelledby="h-s2">
+      <div class="step-head">
+        <p class="k">STEP 2</p>
+        <h2 id="h-s2">내 회사 자원</h2>
+        <p>자기소개 때 쓴 포스트잇 두 장을 그대로 옮겨 적어 주세요.</p>
+      </div>
+
+      <div class="card">
+        <h3><i class="dot y" aria-hidden="true"></i> 노랑 포스트잇 <span class="tag">최대 3개</span></h3>
+        <p class="lead">우리 회사가 중동 고객에게 제공할 수 있는 서비스</p>
+        <div class="stack">
+          <div class="num-input"><span class="no">1</span><input type="text" data-k="y1" aria-label="제공 가능 서비스 1"></div>
+          <div class="num-input"><span class="no">2</span><input type="text" data-k="y2" aria-label="제공 가능 서비스 2"></div>
+          <div class="num-input"><span class="no">3</span><input type="text" data-k="y3" aria-label="제공 가능 서비스 3"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><i class="dot p" aria-hidden="true"></i> 분홍 포스트잇 <span class="tag">최대 3개</span></h3>
+        <p class="lead">우리 회사 단독으로는 어려워 협력이 필요한 부분</p>
+        <div class="stack">
+          <div class="num-input"><span class="no">1</span><input type="text" data-k="p1" aria-label="협력 필요 사항 1"></div>
+          <div class="num-input"><span class="no">2</span><input type="text" data-k="p2" aria-label="협력 필요 사항 2"></div>
+          <div class="num-input"><span class="no">3</span><input type="text" data-k="p3" aria-label="협력 필요 사항 3"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>희망 협력 대상</h3>
+        <div class="field">
+          <label for="f-wish">참가 신청서에 적은 희망 협력 대상</label>
+          <textarea id="f-wish" data-k="wish" rows="2"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step" data-step="3" aria-labelledby="h-s3">
+      <div class="step-head">
+        <p class="k">STEP 3</p>
+        <h2 id="h-s3">우리 조 결과판</h2>
+        <p>결과판 사진을 보면서 6칸을 그대로 옮겨 주세요. 다듬지 않아도 됩니다.</p>
+      </div>
+
+      <div class="notice">
+        <b>조 대표 입력 / 개인 입력 중 편한 방법을 고르세요.</b>
+        <ul>
+          <li><b>조 대표 입력</b>: 한 명이 결과판을 입력한 뒤 ‘결과판 복사’를 눌러 조 단톡방에 공유 → 조원은 ‘공유받은 결과판 붙여넣기’로 한 번에 채웁니다.</li>
+          <li><b>개인 입력</b>: 단톡방에 올라온 결과판 사진을 보며 각자 입력합니다.</li>
+        </ul>
+        <div class="row">
+          <button type="button" class="btn ghost sm" id="btnBoardCopy">결과판 복사(조원 공유용)</button>
+          <button type="button" class="btn ghost sm" id="btnBoardImport">공유받은 결과판 붙여넣기</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>작업판 조합 아이디어 <span class="tag">선택</span></h3>
+        <div class="field">
+          <label for="f-combo">투표로 뽑힌 조합 아이디어 (A사 서비스 + B사 서비스 = 고객 혜택)</label>
+          <textarea id="f-combo" data-k="combo" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>① 상품명·콘셉트</h3>
+        <div class="field">
+          <label for="f-r1n">상품명</label>
+          <input type="text" id="f-r1n" data-k="r1Name">
+        </div>
+        <div class="field">
+          <label for="f-r1c">콘셉트</label>
+          <textarea id="f-r1c" data-k="r1Concept" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>② 타깃 고객</h3>
+        <div class="field">
+          <label for="f-r2n">필요 사항</label>
+          <textarea id="f-r2n" data-k="r2Need" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-r2c">우려 사항</label>
+          <textarea id="f-r2c" data-k="r2Concern" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card days">
+        <h3>③ 일정</h3>
+        <div class="field">
+          <label for="f-d1"><span class="d">1일차</span></label>
+          <textarea id="f-d1" data-k="d1" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-d2"><span class="d">2일차</span></label>
+          <textarea id="f-d2" data-k="d2" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-d3"><span class="d">3일차</span></label>
+          <textarea id="f-d3" data-k="d3" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>④ 참여 회원사·역할</h3>
+        <div class="field">
+          <label for="f-r4" class="sr">참여 회원사·역할</label>
+          <textarea id="f-r4" data-k="r4" rows="3"></textarea>
+          <p class="hint">회사명과 맡은 역할을 적어 주세요. 개인 이름은 쓰지 않습니다.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>⑤ 가격·판매</h3>
+        <div class="field">
+          <label for="f-r5p">가격(안)</label>
+          <input type="text" id="f-r5p" data-k="r5Price">
+          <p class="hint">정해진 금액이 없으면 비워 두세요. AI가 금액을 지어내지 않고 ‘확인 필요’로 처리합니다.</p>
+        </div>
+        <div class="field">
+          <label for="f-r5s">판매·정산 주체</label>
+          <input type="text" id="f-r5s" data-k="r5Seller">
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>⑥ 점검·후속 과제</h3>
+        <div class="field">
+          <span class="label">무슬림 친화 요소 (결과판에 체크한 것)</span>
+          <div class="checks" id="muslimChecks"></div>
+          <p class="mcount" id="mcount" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="f-r6">후속 과제</label>
+          <textarea id="f-r6" data-k="r6Follow" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>2순위 아이디어 <span class="tag">선택</span></h3>
+        <div class="field">
+          <label for="f-alt" class="sr">2순위 아이디어</label>
+          <textarea id="f-alt" data-k="alt" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>실행 가능성 점검 3질문</h3>
+        <div class="field">
+          <label for="f-q1">1. 실제로 예약이 가능한가?</label>
+          <textarea id="f-q1" data-k="q1" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-q2">2. 누가 결제를 받는가?</label>
+          <textarea id="f-q2" data-k="q2" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-q3">3. 고객의 첫 문의에 무엇이라고 답하는가?</label>
+          <textarea id="f-q3" data-k="q3" rows="2"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step" data-step="4" aria-labelledby="h-s4">
+      <div class="step-head">
+        <p class="k">STEP 4</p>
+        <h2 id="h-s4">피드백·후속</h2>
+        <p>조별 발표 후 받은 코멘트와 체크아웃 포스트잇 내용을 적어 주세요.</p>
+      </div>
+
+      <div class="card">
+        <h3>발표 후 코멘트</h3>
+        <div class="field">
+          <label for="f-fbs">판매 경쟁력이 가장 높은 요소</label>
+          <textarea id="f-fbs" data-k="fbS" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="f-fbi">여행사가 우선 확인할 보완 사항</label>
+          <textarea id="f-fbi" data-k="fbI" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>체크아웃 포스트잇</h3>
+        <div class="field">
+          <label for="f-other">다른 조 중 협업하고 싶은 회사</label>
+          <input type="text" id="f-other" data-k="other">
+        </div>
+        <div class="field">
+          <label for="f-week">내 회사의 이번 주 실행 과제 1건</label>
+          <input type="text" id="f-week" data-k="week">
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step" data-step="5" aria-labelledby="h-s5">
+      <div class="step-head">
+        <p class="k">STEP 5</p>
+        <h2 id="h-s5">프롬프트 완성</h2>
+        <p>아래 프롬프트 4개를 순서대로 복사해 같은 AI 채팅창에 붙여넣으세요.</p>
+      </div>
+
+      <div class="card">
+        <h3>입력 완성도 <span class="tag">결과판 6칸 기준</span></h3>
+        <div class="meter">
+          <span class="pct" id="pct">0%</span>
+          <span class="bar" aria-hidden="true"><i id="pctBar"></i></span>
+        </div>
+        <div class="cells" id="cells"></div>
+        <p class="meter-note">비어 있는 칸은 프롬프트에 ‘(확인 필요)’로 들어갑니다. 그래도 진행할 수 있습니다.</p>
+      </div>
+
+      <div class="warn" id="basicWarn" hidden></div>
+
+      <div class="card howto">
+        <h3>사용 순서</h3>
+        <div class="flow" aria-label="1번부터 4번까지 같은 채팅창에서 차례대로">
+          <span>1</span><em>→</em><span>2</span><em>→</em><span>3</span><em>→</em><span>4</span>
+          <b style="margin-left:4px">같은 채팅창에서 차례대로 붙여넣기</b>
+        </div>
+        <ol>
+          <li>Claude(권장) 등 AI 채팅창에서 <b>새 대화</b>를 엽니다.</li>
+          <li>①을 붙여넣고 답변이 끝나면, 같은 대화에 ②를 붙여넣습니다.</li>
+          <li>③까지 받은 뒤 ④를 붙여넣으면 보관용 HTML 문서가 만들어집니다.</li>
+          <li>답변 중 고칠 부분이 있으면 다음 프롬프트로 넘어가기 전에 “○○ 부분을 이렇게 고쳐 줘”라고 요청하세요.</li>
+        </ol>
+        <p class="photo-tip">📷 <b>결과판 사진 안내</b> — Claude 채팅에 결과판 사진을 함께 올리면 빠진 칸을 보완해 줍니다. ①을 붙여넣을 때 사진을 같이 첨부하세요.</p>
+      </div>
+
+      <div id="prompts"></div>
+
+      <div class="card keep">
+        <h3>입력 내용 보관</h3>
+        <p class="lead">현장에서 기기를 돌려쓰는 경우, 보관한 뒤 ‘처음부터 다시 시작’을 눌러 주세요.</p>
+        <div class="row">
+          <button type="button" class="btn ghost" id="btnCopyAll">입력 내용 전체 복사</button>
+          <button type="button" class="btn ghost" id="btnTxt">입력 내용 .txt 저장</button>
+        </div>
+        <p class="hint" style="font-size:13px;color:var(--muted);margin-top:8px">전체 복사는 카카오톡 ‘나와의 채팅’에 붙여넣어 보관하기 좋습니다.</p>
+      </div>
+
+      <div class="card">
+        <h3>처음부터 다시 시작</h3>
+        <p class="lead">모든 입력값과 이 기기에 저장된 내용이 지워집니다.</p>
+        <button type="button" class="btn plain" data-reset>처음부터 다시 시작</button>
+      </div>
+    </section>
+
+    <div class="navbar">
+      <div class="in">
+        <button type="button" class="btn plain" id="btnPrev">이전</button>
+        <button type="button" class="btn" id="btnNext">다음</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>2026 알람아라비코리아 하반기 2차 세미나 · 부산 중동 타깃 연계 상품화 워크숍</footer>
+
+<!-- Reset modal -->
+<div class="modal" id="resetModal" role="dialog" aria-modal="true" aria-labelledby="rm-h">
+  <div class="box">
+    <h3 id="rm-h">처음부터 다시 시작할까요?</h3>
+    <p>모든 입력값과 이 기기에 저장된 내용이 <b>완전히 지워지고 되돌릴 수 없습니다.</b> 필요하면 먼저 ‘입력 내용 전체 복사’나 ‘.txt 저장’으로 보관해 주세요.</p>
+    <div class="row">
+      <button type="button" class="btn plain" data-close>취소</button>
+      <button type="button" class="btn" id="btnResetOk">모두 지우기</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import modal -->
+<div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="im-h">
+  <div class="box">
+    <h3 id="im-h">공유받은 결과판 붙여넣기</h3>
+    <p>조 대표가 단톡방에 올린 ‘결과판 복사’ 내용을 통째로 붙여넣으세요. 조 선택과 STEP 3 칸이 채워지고, 내 회사 정보는 그대로 유지됩니다.</p>
+    <label for="importText" class="sr">결과판 텍스트</label>
+    <textarea id="importText" placeholder="■ 중동 상품화 워크숍 결과판 …"></textarea>
+    <div class="row">
+      <button type="button" class="btn plain" data-close>취소</button>
+      <button type="button" class="btn" id="btnImportOk">채우기</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =====================================================================
+   * 1. 조 프리셋 데이터 (수정 포인트 ①)
+   *    조 구성·테마·타깃·과제·페르소나를 바꾸려면 여기만 고치면 됩니다.
+   *    조원 표기는 회사명만 씁니다(개인 이름 금지).
+   * ===================================================================== */
+  var TEAMS = {
+    '1': {
+      theme: '럭셔리 뷰티 & 오션 웰니스',
+      target: '중동 고소득층 여성 소그룹',
+      members: [['케이한의원', 'A'], ['라비앙수', 'A'], ['그랜드 조선 부산', 'B'], ['휴먼케어서비스', 'C']],
+      task: '한방·피부 관리 + 오션뷰 휴양 여성 전용 상품',
+      persona: '누라(36) · UAE 두바이 · 어머니(61)·여동생 동반 · 3박 4일 · 고가 선호 · 부산 첫 방문'
+    },
+    '2': {
+      theme: '오션 패밀리 홀리데이',
+      target: '자녀 동반 중동 가족',
+      members: [['아르떼뮤지엄 부산', 'A'], ['밝히는 사람들', 'A'], ['웨스틴조선부산', 'B'], ['제인디엠씨부산', 'C']],
+      task: '가족 체험·야간 웰니스·숙박을 묶은 가족 상품',
+      persona: '압둘라 가족 · 사우디 리야드 · 부부 + 자녀 3명(7·10·14세) · 4박 5일 · 커넥팅 객실 · 첫 방한'
+    },
+    '3': {
+      theme: '비즈니스 & 레저',
+      target: '에너지·조선·해양 산업 출장객',
+      members: [['소피텔 앰배서더 서울', 'B'], ['웨스틴조선부산', 'B'], ['SMB 웰니스', 'A'], ['휴먼케어서비스', 'C']],
+      task: '출장 일정 전후 1~2일 연장형 웰니스·레저 상품',
+      persona: '유세프(42) · UAE 아부다비 · 조선·에너지 분야 출장단 4명 · 출장 3일 + 연장 2일'
+    }
+  };
+
+  var ROLES = { A: 'A 핵심 체험(의료·뷰티·웰니스·문화)', B: 'B 숙박', C: 'C 판매·응대(컨시어지·여행사)' };
+
+  var MUSLIM = [
+    ['m1', '식음', '할랄·무슬림 프렌들리'],
+    ['m2', '여성 의료진', ''],
+    ['m3', '여성 전용 서비스', ''],
+    ['m4', '기도 편의', '시간·장소·방향'],
+    ['m5', '프라이버시', '단독 동선·객실·차량']
+  ];
+
+  /* =====================================================================
+   * 2. 조별 입력 예시(placeholder) — 실제 결과처럼 보이지 않게 일반적인 수준으로
+   * ===================================================================== */
+  var EX = {
+    '1': {
+      company: '예: 우리 회사명 (위 조 구성 회사를 눌러도 입력됩니다)',
+      job: '예: 해외마케팅 담당',
+      y1: '예: 여성 전용 피부 관리 프로그램', y2: '예: 영어 상담 가능 인력', y3: '예: 오션뷰 휴식 공간',
+      p1: '예: 공항–숙소 간 여성 고객 전용 차량', p2: '예: 아랍어 통역·응대', p3: '예: 할랄 식사 가능한 식당 연결',
+      wish: '예: 오션뷰 숙박이 가능한 호텔, 아랍어 응대가 가능한 여행사',
+      combo: '예: 피부 관리 + 오션뷰 객실 = 관리 후 이동 없이 객실에서 회복',
+      r1Name: '예: 부산 오션 뷰티 리트리트 3박 4일',
+      r1Concept: '예: 여성 가족이 피부 관리와 오션뷰 휴식을 한 동선에서 누리는 프라이빗 일정',
+      r2Need: '예: 여성 의료진, 가족 단위 프라이버시, 고급 객실',
+      r2Concern: '예: 관리 후 회복 시간, 할랄 식사, 기도 공간',
+      d1: '예: 공항 도착 → 전용 차량 이동 → 체크인·휴식',
+      d2: '예: 오전 진단·피부 관리 → 오후 객실 휴식 → 저녁 식사',
+      d3: '예: 오션 웰니스 프로그램 → 쇼핑 → 귀국 준비',
+      r4: '예: A사 – 피부 관리 / B사 – 숙박·식음 / C사 – 공항 픽업·통역',
+      r5Price: '예: 1인 패키지가, 3인 그룹 할인 여부',
+      r5Seller: '예: C사가 판매·정산, 각 사에 원가 지급',
+      r6Follow: '예: 여성 의료진 근무 요일 확인, 할랄 식당 섭외',
+      alt: '예: 1박 2일 단기 뷰티 데이 패키지',
+      q1: '예: 평일 오전 예약 가능, 주말은 확인 필요',
+      q2: '예: 여행사가 일괄 결제 후 각 사 정산',
+      q3: '예: 여성 의료진과 기도 공간이 준비되는지 먼저 안내',
+      fbS: '예: 여성 전용 동선과 오션뷰 회복 일정',
+      fbI: '예: 프로그램별 소요 시간과 가격 범위',
+      other: '예: 다른 조의 체험 업체 – 가족 확장 상품 검토',
+      week: '예: 조원 회사에 상품 초안 공유하고 가능 일정 회신받기'
+    },
+    '2': {
+      company: '예: 우리 회사명 (위 조 구성 회사를 눌러도 입력됩니다)',
+      job: '예: 단체 영업 담당',
+      y1: '예: 가족 단위 실내 체험 프로그램', y2: '예: 커넥팅 객실·키즈 시설', y3: '예: 야간 체험 프로그램',
+      p1: '예: 가족 6인 이상 대형 차량', p2: '예: 아랍어 안내 자료', p3: '예: 무슬림 프렌들리 가족 식당',
+      wish: '예: 커넥팅 객실이 있는 호텔, 가족 일정을 운영할 여행사',
+      combo: '예: 실내 체험 + 야간 웰니스 = 아이와 부모가 함께 쉬는 저녁 일정',
+      r1Name: '예: 부산 오션 패밀리 4박 5일',
+      r1Concept: '예: 낮에는 가족 체험, 밤에는 휴식하는 첫 방한 가족 일정',
+      r2Need: '예: 커넥팅 객실, 연령별 체험, 이동 편의',
+      r2Concern: '예: 아이들 식사, 기도 시간 확보, 이동 피로',
+      d1: '예: 도착 → 대형 차량 이동 → 체크인·해변 산책',
+      d2: '예: 오전 실내 체험 → 오후 휴식 → 저녁 야간 프로그램',
+      d3: '예: 가족 웰니스 → 쇼핑 → 휴식',
+      r4: '예: A사 – 체험 / B사 – 숙박·식음 / C사 – 일정 운영·통역',
+      r5Price: '예: 가족 1팀(5인) 기준 패키지가',
+      r5Seller: '예: C사가 판매·정산 담당',
+      r6Follow: '예: 커넥팅 객실 보유 수 확인, 아동 요금 기준 정리',
+      alt: '예: 2박 3일 주말 가족 체험 패키지',
+      q1: '예: 체험 단체 예약은 2주 전까지 가능',
+      q2: '예: 현지 여행사가 일괄 결제',
+      q3: '예: 아이 연령별 참여 가능 체험과 식사 옵션 안내',
+      fbS: '예: 낮·밤으로 나눈 가족 맞춤 동선',
+      fbI: '예: 아동 요금과 차량 규모',
+      other: '예: 다른 조의 웰니스 업체 – 부모 대상 옵션 추가',
+      week: '예: 객실 블록 가능 일자 내부 확인'
+    },
+    '3': {
+      company: '예: 우리 회사명 (위 조 구성 회사를 눌러도 입력됩니다)',
+      job: '예: 기업 영업(MICE) 담당',
+      y1: '예: 출장객 대상 회복 프로그램', y2: '예: 회의실·비즈니스 라운지', y3: '예: 늦은 시간 조식·체크아웃 조정',
+      p1: '예: 출장지–숙소 간 법인 차량', p2: '예: 서울–부산 이동 연계', p3: '예: 아랍어 통역',
+      wish: '예: 서울·부산 호텔 연계, 출장단 응대 경험이 있는 컨시어지',
+      combo: '예: 출장 후 웰니스 + 오션뷰 숙박 = 업무 종료 후 바로 회복',
+      r1Name: '예: 부산 비즈니스 플러스 2일 연장 패키지',
+      r1Concept: '예: 출장 3일 뒤 2일간 회복·레저를 이어 붙이는 출장단 연장형 상품',
+      r2Need: '예: 짧은 이동, 유연한 일정, 개인 공간',
+      r2Concern: '예: 업무 일정 변동, 기도 시간, 할랄 식사',
+      d1: '예: 출장 일정 종료 → 호텔 이동 → 웰니스 프로그램',
+      d2: '예: 오전 자유 → 오후 레저 → 저녁 식사',
+      d3: '예: 쇼핑 → 공항 이동·귀국',
+      r4: '예: A사 – 웰니스 / B사 – 숙박 / C사 – 일정·차량·통역',
+      r5Price: '예: 1인 연장 2일 기준 추가 요금',
+      r5Seller: '예: C사 또는 출장 주관 기관이 결제',
+      r6Follow: '예: 출장 주관사 접점 확인, 서울–부산 이동 방법 정리',
+      alt: '예: 출장 전 1일 서울 웰니스 프로그램',
+      q1: '예: 평일 저녁 웰니스 예약 가능',
+      q2: '예: 법인 카드 결제 또는 여행사 정산',
+      q3: '예: 연장 일정 변경·취소 기준 안내',
+      fbS: '예: 출장 일정에 붙여 추가 이동 부담이 적음',
+      fbI: '예: 일정 변동 시 취소 규정',
+      other: '예: 다른 조의 체험 업체 – 출장단 저녁 일정',
+      week: '예: 출장단 유치 경험이 있는 여행사 1곳에 문의'
+    }
+  };
+  var EX_NONE = '조를 선택하면 예시가 나옵니다';
+
+  /* =====================================================================
+   * 3. 필드 정의 — 전체 복사·.txt·결과판 공유·불러오기에 공통으로 쓰입니다.
+   *    board:true 인 항목이 '결과판 복사/붙여넣기' 대상입니다.
+   * ===================================================================== */
+  var FIELDS = [
+    { k: 'team', label: '조', step: 1, board: true },
+    { k: 'company', label: '회사명', step: 1 },
+    { k: 'role', label: '역할', step: 1 },
+    { k: 'job', label: '담당 직무', step: 1 },
+    { k: 'y1', label: '노랑 포스트잇 1', step: 2 },
+    { k: 'y2', label: '노랑 포스트잇 2', step: 2 },
+    { k: 'y3', label: '노랑 포스트잇 3', step: 2 },
+    { k: 'p1', label: '분홍 포스트잇 1', step: 2 },
+    { k: 'p2', label: '분홍 포스트잇 2', step: 2 },
+    { k: 'p3', label: '분홍 포스트잇 3', step: 2 },
+    { k: 'wish', label: '희망 협력 대상', step: 2 },
+    { k: 'combo', label: '조합 아이디어(투표 1위)', step: 3, board: true },
+    { k: 'r1Name', label: '① 상품명', step: 3, board: true },
+    { k: 'r1Concept', label: '① 콘셉트', step: 3, board: true },
+    { k: 'r2Need', label: '② 타깃 필요 사항', step: 3, board: true },
+    { k: 'r2Concern', label: '② 타깃 우려 사항', step: 3, board: true },
+    { k: 'd1', label: '③ 1일차', step: 3, board: true },
+    { k: 'd2', label: '③ 2일차', step: 3, board: true },
+    { k: 'd3', label: '③ 3일차', step: 3, board: true },
+    { k: 'r4', label: '④ 참여 회원사·역할', step: 3, board: true },
+    { k: 'r5Price', label: '⑤ 가격', step: 3, board: true },
+    { k: 'r5Seller', label: '⑤ 판매·정산 주체', step: 3, board: true },
+    { k: 'muslim', label: '⑥ 무슬림 친화 체크', step: 3, board: true },
+    { k: 'r6Follow', label: '⑥ 후속 과제', step: 3, board: true },
+    { k: 'alt', label: '2순위 아이디어', step: 3, board: true },
+    { k: 'q1', label: '점검1 예약 가능 여부', step: 3, board: true },
+    { k: 'q2', label: '점검2 결제 주체', step: 3, board: true },
+    { k: 'q3', label: '점검3 고객 첫 문의 답', step: 3, board: true },
+    { k: 'fbS', label: '코멘트 강점', step: 4 },
+    { k: 'fbI', label: '코멘트 보완 사항', step: 4 },
+    { k: 'other', label: '다른 조 협업 희망 회사', step: 4 },
+    { k: 'week', label: '이번 주 실행 과제', step: 4 }
+  ];
+  var STEP_TITLES = ['우리 조·내 회사', '내 회사 자원', '우리 조 결과판', '피드백·후속', '프롬프트 완성'];
+  var STEP_SHORT = ['조·회사', '자원', '결과판', '피드백', '완성'];
+  var STEP_SUB = ['조 선택·회사·역할', '노랑·분홍 포스트잇', '결과판 6칸·점검', '코멘트·실행 과제', '프롬프트 4종·보관'];
+
+  var STORE_KEY = 'aak-mideast-workshop-2026-v1';
+  var NA = '(확인 필요)';
+  var DATE = '2026. 11. 2.';
+
+  /* ---------- state ---------- */
+  var S = load();
+
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(STORE_KEY);
+      var obj = raw ? JSON.parse(raw) : {};
+      return (obj && typeof obj === 'object') ? obj : {};
+    } catch (e) { return {}; }
+  }
+  function hasData() {
+    return Object.keys(S).some(function (k) { return k !== 'step' && S[k]; });
+  }
+  var saveTimer = null;
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 250);
+  }
+  function saveNow() {
+    clearTimeout(saveTimer);
+    try {
+      if (hasData()) window.localStorage.setItem(STORE_KEY, JSON.stringify(S));
+      else window.localStorage.removeItem(STORE_KEY);
+    } catch (e) { /* 저장 불가(사파리 개인정보 보호 모드 등) — 화면 동작은 그대로 */ }
+  }
+
+  /* ---------- helpers ---------- */
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function t(x) { return (x == null ? '' : String(x)).trim(); }
+  function v(x) { var s = t(x); return s ? s : NA; }
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (a) { n.setAttribute(a, attrs[a]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function muslimCount() { return MUSLIM.filter(function (m) { return !!S[m[0]]; }).length; }
+  function muslimText() {
+    var on = MUSLIM.filter(function (m) { return !!S[m[0]]; }).map(function (m) { return m[1]; });
+    return on.length ? on.join(', ') + ' (' + on.length + '/5)' : '';
+  }
+  function team() { return TEAMS[S.team] || null; }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var tEl = $('#toast');
+    tEl.textContent = msg;
+    tEl.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { tEl.classList.remove('on'); }, 2200);
+  }
+
+  /* ---------- build static pieces ---------- */
+  function buildTeamChoices() {
+    var box = $('#teamChoices');
+    Object.keys(TEAMS).forEach(function (id) {
+      var tm = TEAMS[id];
+      var lab = el('label', { 'class': 'choice' });
+      var inp = el('input', { type: 'radio', name: 'team', value: id, 'data-radio': 'team' });
+      var sp = el('span');
+      sp.appendChild(el('b', null, id + '조'));
+      sp.appendChild(document.createTextNode(tm.theme));
+      sp.appendChild(el('small', null, tm.target));
+      lab.appendChild(inp); lab.appendChild(sp);
+      box.appendChild(lab);
+    });
+  }
+  function buildMuslimChecks() {
+    var box = $('#muslimChecks');
+    MUSLIM.forEach(function (m, i) {
+      var lab = el('label', { 'class': 'check' });
+      var inp = el('input', { type: 'checkbox', 'data-k': m[0] });
+      var d = el('div');
+      d.appendChild(el('b', null, (i + 1) + '. ' + m[1]));
+      if (m[2]) d.appendChild(el('small', null, m[2]));
+      lab.appendChild(inp); lab.appendChild(d);
+      box.appendChild(lab);
+    });
+  }
+  function buildSteps() {
+    var bar = $('#stepbar'), side = $('#sidesteps');
+    STEP_TITLES.forEach(function (title, i) {
+      var n = i + 1;
+      var li = el('li');
+      var b = el('button', { type: 'button', 'data-go': n, 'aria-label': 'STEP ' + n + ' ' + title });
+      b.appendChild(el('span', { 'class': 'n' }, String(n)));
+      b.appendChild(el('span', null, STEP_SHORT[i]));
+      li.appendChild(b); bar.appendChild(li);
+
+      var li2 = el('li');
+      var b2 = el('button', { type: 'button', 'data-go': n });
+      b2.appendChild(el('span', { 'class': 'n' }, String(n)));
+      var tx = el('span');
+      tx.appendChild(document.createTextNode(title));
+      tx.appendChild(el('small', null, STEP_SUB[i]));
+      b2.appendChild(tx);
+      li2.appendChild(b2); side.appendChild(li2);
+    });
+  }
+
+  /* ---------- sync state → form ---------- */
+  function fillForm() {
+    $$('[data-k]').forEach(function (inp) {
+      var k = inp.getAttribute('data-k');
+      if (inp.type === 'checkbox') inp.checked = !!S[k];
+      else inp.value = S[k] || '';
+    });
+    $$('[data-radio]').forEach(function (inp) {
+      inp.checked = S[inp.getAttribute('data-radio')] === inp.value;
+    });
+  }
+
+  function applyPlaceholders() {
+    var ex = EX[S.team];
+    $$('[data-k]').forEach(function (inp) {
+      if (inp.type === 'checkbox') return;
+      var k = inp.getAttribute('data-k');
+      inp.placeholder = ex ? (ex[k] || '') : EX_NONE;
+    });
+  }
+
+  function renderTeam() {
+    var tm = team();
+    var info = $('#teamInfo');
+    var chips = $('#memberChips');
+    info.textContent = ''; chips.textContent = '';
+    if (!tm) {
+      info.className = 'team-info empty';
+      info.textContent = '조를 선택하면 조 정보가 여기에 표시됩니다.';
+      $('#chipHint').hidden = false;
+      return;
+    }
+    info.className = 'team-info';
+    var dl = el('dl');
+    [
+      ['테마', tm.theme],
+      ['타깃', tm.target],
+      ['조 구성', tm.members.map(function (m) { return m[0] + '(' + m[1] + ')'; }).join(', ')],
+      ['기획 과제', tm.task],
+      ['가상 고객', tm.persona]
+    ].forEach(function (row) {
+      dl.appendChild(el('dt', null, row[0]));
+      dl.appendChild(el('dd', null, row[1]));
+    });
+    info.appendChild(dl);
+    $('#chipHint').hidden = true;
+    tm.members.forEach(function (m) {
+      var c = el('button', { type: 'button', 'class': 'chip' + (t(S.company) === m[0] ? ' on' : ''), 'data-co': m[0], 'data-role': m[1] }, m[0] + ' · ' + m[1]);
+      chips.appendChild(c);
+    });
+  }
+
+  function renderMuslim() {
+    var n = muslimCount();
+    var box = $('#mcount');
+    box.textContent = '';
+    box.appendChild(document.createTextNode('체크 '));
+    box.appendChild(el('b', null, n + '/5'));
+    box.appendChild(document.createTextNode(n >= 4 ? ' · 공통 조건(4개 이상) 충족' : ' · 공통 조건(4개 이상)까지 ' + (4 - n) + '개 더 필요'));
+  }
+
+  /* ---------- completion (결과판 6칸 기준) ---------- */
+  function cellScores() {
+    var f = function (k) { return t(S[k]) ? 1 : 0; };
+    return [
+      { name: '① 상품명·콘셉트', s: (f('r1Name') + f('r1Concept')) / 2 },
+      { name: '② 타깃 고객', s: (f('r2Need') + f('r2Concern')) / 2 },
+      { name: '③ 일정', s: (f('d1') + f('d2') + f('d3')) / 3 },
+      { name: '④ 회원사·역할', s: f('r4') },
+      { name: '⑤ 가격·판매', s: (f('r5Price') + f('r5Seller')) / 2 },
+      { name: '⑥ 점검·후속', s: ((muslimCount() > 0 ? 1 : 0) + f('r6Follow')) / 2 }
+    ];
+  }
+  function completion() {
+    var c = cellScores();
+    var sum = c.reduce(function (a, x) { return a + x.s; }, 0);
+    return Math.round(sum / c.length * 100);
+  }
+  function renderMeter() {
+    var pct = completion();
+    $('#pct').textContent = pct + '%';
+    $('#pctBar').style.width = pct + '%';
+    $('#sidePct').textContent = pct + '%';
+    var box = $('#cells');
+    box.textContent = '';
+    cellScores().forEach(function (c) {
+      var cls = c.s >= 1 ? 'cell full' : (c.s > 0 ? 'cell part' : 'cell');
+      var d = el('div', { 'class': cls });
+      d.appendChild(el('b', null, c.name.slice(0, 1)));
+      d.appendChild(document.createTextNode(c.s >= 1 ? '완료' : (c.s > 0 ? '일부' : '비어 있음')));
+      d.title = c.name;
+      box.appendChild(d);
+    });
+  }
+
+  /* =====================================================================
+   * 4. 프롬프트 템플릿 (수정 포인트 ②)
+   *    공통 블록(ctx*) + 프롬프트 4종(P1~P4). 빈 입력은 v()로 '(확인 필요)' 처리.
+   * ===================================================================== */
+  function list(keys) {
+    var arr = keys.map(function (k) { return t(S[k]); }).filter(Boolean);
+    if (!arr.length) return '  - ' + NA;
+    return arr.map(function (x, i) { return '  ' + (i + 1) + ') ' + x; }).join('\n');
+  }
+
+  var RULES = [
+    '# 공통 규칙',
+    '1. 입력에 없는 사실·숫자·회사 서비스는 지어내지 않는다. 빈칸이나 근거가 없는 항목은 \'(확인 필요)\'로 표시한다.',
+    '2. 추상적·비유적 표현을 쓰지 않는다. 업무용 문장으로 쓴다.',
+    '3. 조원 회사의 서비스를 과장하거나 실제 계약된 것처럼 쓰지 않는다. 모든 협업 내용은 \'제안 단계\'임을 명시한다.',
+    '4. 무슬림 친화 요소는 \'확정\'과 \'가능 여부 확인 필요\'를 구분해 표기한다. 결과판 체크는 조 논의 결과일 뿐이므로, 회원사가 확인해 준 내용이 입력에 없으면 \'가능 여부 확인 필요\'로 분류한다.',
+    '5. 참고 수치(GCC 6개국 방한객 1인당 평균 지출 642만 원)는 쓸 경우 반드시 \'참고 수치\'로 표기하고 출처(한국관광공사 발표, 머니투데이 2026. 1. 27.)를 함께 쓴다. 기준 연도는 확인되지 않았으므로 연도를 붙이지 않는다.',
+    '6. 사람 이름은 쓰지 않고 회사명만 쓴다. (가상 고객 페르소나 이름은 예외)'
+  ].join('\n');
+
+  function ctxEvent() {
+    return [
+      '[워크숍 정보]',
+      '- 행사: 2026 알람아라비코리아 하반기 2차 세미나 2부 (주최: 한국관광공사 아시아중동팀)',
+      '- 과정: 부산지역 중동 뷰티·하이엔드 상품화 워크숍 (강점 진단 → 셀링 포인트 도출 → 연계 상품 기획)',
+      '- 일시·장소: 2026. 11. 2.(월) 15:15~16:30, 부산 북항친수공원 세미나실',
+      '- 참가: 부산 회원사 12명, 3개 조',
+      '- 목적: 회원사 간 서비스를 연계해 중동 시장 대상 신규 협업 상품 기획',
+      '- 역할 라벨: A 핵심 체험(의료·뷰티·웰니스·문화) / B 숙박 / C 판매·응대(컨시어지·여행사)',
+      '- 공통 조건: 웰니스 요소 1개 이상 포함, 무슬림 친화 요소 5개 중 4개 이상 충족',
+      '- 무슬림 친화 5요소: ① 식음(할랄·무슬림 프렌들리) ② 여성 의료진 ③ 여성 전용 서비스 ④ 기도 편의(시간·장소·방향) ⑤ 프라이버시(단독 동선·객실·차량)',
+      '- 참고 수치: GCC 6개국 방한객 1인당 평균 지출 642만 원, 전체 평균의 2배 이상 (출처: 한국관광공사 발표, 머니투데이 2026. 1. 27. / 기준 연도 미확인 → \'참고 수치\'로만 사용)'
+    ].join('\n');
+  }
+  function ctxTeam() {
+    var tm = team();
+    return [
+      '[우리 조 정보]',
+      '- 조: ' + (S.team ? S.team + '조' : NA),
+      '- 테마: ' + (tm ? tm.theme : NA),
+      '- 타깃: ' + (tm ? tm.target : NA),
+      '- 조 구성(회사·역할): ' + (tm ? tm.members.map(function (m) { return m[0] + '(' + m[1] + ')'; }).join(', ') : NA),
+      '- 기획 과제: ' + (tm ? tm.task : NA),
+      '- 가상 고객 페르소나: ' + (tm ? tm.persona : NA)
+    ].join('\n');
+  }
+  function ctxMe() {
+    return [
+      '[내 회사 정보]',
+      '- 회사명: ' + v(S.company),
+      '- 역할: ' + (S.role ? ROLES[S.role] : NA),
+      '- 담당 직무: ' + v(S.job),
+      '- 우리 회사가 제공할 수 있는 서비스(노랑 포스트잇):',
+      list(['y1', 'y2', 'y3']),
+      '- 단독으로 어려워 협력이 필요한 부분(분홍 포스트잇):',
+      list(['p1', 'p2', 'p3']),
+      '- 신청서에 적은 희망 협력 대상: ' + v(S.wish)
+    ].join('\n');
+  }
+  function ctxBoard() {
+    var ml = MUSLIM.map(function (m, i) {
+      return '  ' + (i + 1) + ') ' + m[1] + (m[2] ? '(' + m[2] + ')' : '') + ': ' + (S[m[0]] ? '조에서 충족으로 체크' : '체크 안 함');
+    }).join('\n');
+    return [
+      '[워크숍 결과판] — 전지에 쓴 초안 그대로입니다.',
+      '- 작업판 조합 아이디어(투표 1위): ' + v(S.combo),
+      '① 상품명: ' + v(S.r1Name),
+      '① 콘셉트: ' + v(S.r1Concept),
+      '② 타깃 고객 필요 사항: ' + v(S.r2Need),
+      '② 타깃 고객 우려 사항: ' + v(S.r2Concern),
+      '③ 일정 1일차: ' + v(S.d1),
+      '③ 일정 2일차: ' + v(S.d2),
+      '③ 일정 3일차: ' + v(S.d3),
+      '④ 참여 회원사·역할: ' + v(S.r4),
+      '⑤ 가격: ' + v(S.r5Price),
+      '⑤ 판매·정산 주체: ' + v(S.r5Seller),
+      '⑥ 무슬림 친화 점검: ' + muslimCount() + '/5',
+      ml,
+      '⑥ 후속 과제: ' + v(S.r6Follow),
+      '- 2순위 아이디어: ' + v(S.alt),
+      '- 실행 가능성 점검',
+      '  1) 예약 가능 여부: ' + v(S.q1),
+      '  2) 결제 주체: ' + v(S.q2),
+      '  3) 고객 첫 문의에 대한 답: ' + v(S.q3)
+    ].join('\n');
+  }
+  function ctxComment() {
+    return [
+      '[조별 발표 후 코멘트]',
+      '- 판매 경쟁력이 가장 높은 요소: ' + v(S.fbS),
+      '- 여행사가 우선 확인할 보완 사항: ' + v(S.fbI)
+    ].join('\n');
+  }
+
+  function P1() {
+    return [
+      '# 역할',
+      '당신은 중동 인바운드 상품 개발 15년 경력의 상품기획자입니다. GCC 고객의 여행 방식, 무슬림 친화 서비스 기준, 국내 회원사 간 연계 상품의 원가·정산 구조를 실무 수준으로 다룹니다.',
+      '',
+      '# 목표',
+      '오늘 워크숍에서 전지 결과판에 쓴 초안을, 회원사 내부 보고에 바로 쓸 수 있는 \'연계 상품 기획서\'로 고도화합니다.',
+      '',
+      ctxEvent(), '', ctxTeam(), '', ctxMe(), '', ctxBoard(), '', ctxComment(),
+      '',
+      '# 진행 순서',
+      'STEP 1. 결과판 진단표',
+      '- 결과판 6칸(①~⑥)을 칸별로 \'충분 / 보완 필요 / 비어 있음\' 중 하나로 판정하고, 이유를 한 줄로 씁니다.',
+      '- 결과판 사진이 함께 올라왔다면 사진에서 읽은 내용으로 빈칸을 보완하고, 해당 칸에 \'사진에서 보완\'이라고 표시합니다.',
+      '',
+      'STEP 2. 연계 상품 기획서 본문',
+      '1) 상품 개요: 상품명, 콘셉트 1~2문장, 기간, 대상, 핵심 혜택 3개',
+      '2) 타깃 페르소나 심화: 가상 고객 페르소나를 기준으로 여행 목적, 결정권자, 필요 사항, 우려 사항, 예약 경로',
+      '3) 시간 단위 일정표: 시간대 / 장소·내용 / 담당 회원사 / 무슬림 친화 포인트 열로 정리합니다. 결과판 1~3일차를 기준으로 하고, 페르소나 기간이 더 길면 나머지 일차는 \'(확인 필요)\'로 둡니다. 하루 5회 기도 시간(파즈르·주흐르·아스르·마그립·이샤)을 고려해 일정 사이에 기도 시간대를 표기합니다. 정확한 시각은 \'(확인 필요)\'로 둡니다.',
+      '4) 회원사별 제공 서비스·역할 분담표: 회사명 / 역할(A·B·C) / 제공 서비스 / 필요한 협력 / 상태(제안 단계)',
+      '5) 무슬림 친화 5요소 점검표: 요소 / 일정 안 적용 위치 / 상태(\'확정\' 또는 \'가능 여부 확인 필요\') / 미충족 시 보완안. 마지막에 충족 개수(n/5)와 공통 조건(4개 이상) 충족 여부를 씁니다.',
+      '6) 가격 구조: 원가 항목(숙박, 체험·시술, 식음, 차량, 통역·가이드, 판매 수수료 등)만 나열합니다. 금액은 지어내지 말고 모두 \'(회원사 확인 필요)\'로 둡니다. 결과판 ⑤에 적힌 금액이 있으면 \'결과판 기재값\'으로 표시합니다.',
+      '7) 판매·정산 구조: 판매 주체, 결제 흐름, 회원사별 정산 방식, 취소·환불 시 확인할 점',
+      '8) 리스크 3개와 대응: 리스크 / 발생 상황 / 대응 방안 표',
+      '',
+      'STEP 3. 발표 코멘트 반영',
+      '- [조별 발표 후 코멘트]의 보완 사항을 반영해 고친 부분을 기획서 안에 \'【코멘트 반영】\'으로 표시하고, 마지막에 반영 내역을 목록으로 정리합니다.',
+      '',
+      'STEP 4. 🔎 회원사 확인 질문',
+      '- 가격, 예약 가능일, 인력(여성 의료진·통역 등), 시설처럼 회원사에 확인해야 할 질문을 5개 이내로 씁니다. 질문마다 확인할 회사명을 붙입니다.',
+      '',
+      RULES,
+      '',
+      '# 출력 형식',
+      '- 문서 맨 위에 \'작성일 ' + DATE + ' / 상태: 제안 단계(회원사 확인 전)\'를 씁니다.',
+      '- 마크다운 제목(##)과 표를 사용합니다.',
+      '- 순서: STEP 1 진단표 → STEP 2 기획서 본문 → STEP 3 반영 내역 → STEP 4 확인 질문',
+      '- 이 결과는 다음 프롬프트(여행사 제안서, 실행 플랜, HTML 보관본)의 재료가 됩니다.'
+    ].join('\n');
+  }
+
+  function P2() {
+    var tm = team();
+    return [
+      '# 역할',
+      '당신은 중동(GCC) 송출 여행사·에이전시를 상대해 온 B2B 세일즈 디렉터입니다. 여행사 상품 담당자가 짧은 시간 안에 판매 가능성을 판단할 수 있는 소개서를 만듭니다.',
+      '',
+      '# 목표',
+      '이 채팅창에서 앞서 작성한 \'연계 상품 기획서\'(①번 프롬프트 결과)를 바탕으로, 중동 여행사에 보낼 1페이지 B2B 상품 소개서를 국문과 영문으로 만듭니다.',
+      '',
+      '[입력 정보]',
+      '- 기준 자료: 이 채팅창의 연계 상품 기획서(①번 결과). 기획서가 없다면 아래 요약만으로 작성하고, 맨 위에 \'기획서 없이 작성됨\'이라고 표시합니다.',
+      '- 상품명: ' + v(S.r1Name),
+      '- 콘셉트: ' + v(S.r1Concept),
+      '- 조·테마·타깃: ' + (S.team ? S.team + '조' : NA) + ' / ' + (tm ? tm.theme : NA) + ' / ' + (tm ? tm.target : NA),
+      '- 가상 고객 페르소나: ' + (tm ? tm.persona : NA),
+      '- 참여 회원사·역할: ' + v(S.r4),
+      '- 일정 요약: 1일차 ' + v(S.d1) + ' / 2일차 ' + v(S.d2) + ' / 3일차 ' + v(S.d3),
+      '- 무슬림 친화(결과판 체크): ' + (muslimText() || '체크 없음 ' + NA),
+      '- 가격: ' + v(S.r5Price) + ' / 판매·정산 주체: ' + v(S.r5Seller),
+      '- 발표 코멘트 — 판매 경쟁력이 가장 높은 요소: ' + v(S.fbS),
+      '- 발표 코멘트 — 여행사가 우선 확인할 보완 사항: ' + v(S.fbI),
+      '',
+      '# 진행 순서',
+      'STEP 1. 셀링 포인트 선정: 기획서와 발표 코멘트(판매 경쟁력이 가장 높은 요소)를 근거로 셀링 포인트 3개를 고르고, 근거를 한 줄씩 씁니다. (근거는 소개서 본문에 넣지 않습니다.)',
+      'STEP 2. 국문 소개서 — 아래 구성 순서를 지킵니다.',
+      '  1) 헤드라인: 한 문장. 대상 고객과 핵심 혜택을 담습니다.',
+      '  2) 왜 부산인가: 3줄. 해안 도시, 공항 접근성처럼 일반적으로 알려진 사실만 쓰고 확인되지 않은 수치는 넣지 않습니다.',
+      '  3) 셀링 포인트 3개',
+      '  4) 일정 요약: 일차별 1줄',
+      '  5) 포함·불포함 사항: 확인되지 않은 항목은 \'(확인 필요)\'',
+      '  6) 무슬림 친화 서비스: 항목마다 \'확정\' 또는 \'확인 중\' 표기',
+      '  7) 예약·문의 구조: 판매·정산 주체, 문의 창구, 최소 인원, 예약 리드타임(정해지지 않았으면 \'(확인 필요)\')',
+      'STEP 3. 영문 소개서: 국문과 같은 구성으로, 여행사 담당자가 그대로 읽을 수 있는 B2B 비즈니스 영어로 씁니다. \'(확인 필요)\'는 \'(TBC)\'로 표기합니다.',
+      'STEP 4. 발송 전 체크리스트 3개: 여행사에 보내기 전에 회원사와 확인할 것',
+      '',
+      RULES,
+      '7. 과장 표현(최고, 유일, 완벽, 세계 최초 등)을 쓰지 않는다. 확인되지 않은 수치는 쓰지 않는다.',
+      '8. 642만 원 수치는 \'참고\' 표기와 출처(한국관광공사 발표, 머니투데이 2026. 1. 27.) 없이 쓰지 않는다.',
+      '',
+      '# 출력 형식',
+      '- 순서: STEP 1 셀링 포인트 근거 → 국문 소개서 → English version → 발송 전 체크리스트',
+      '- 국문·영문 소개서는 각각 A4 1페이지 이내 분량으로, 제목·글머리표·표를 사용합니다.',
+      '- 소개서 하단에 \'본 상품은 회원사 간 제안 단계이며, 세부 조건은 협의 후 확정됩니다.\'(영문: This package is at the proposal stage; details are subject to confirmation by partner companies.)를 넣습니다.'
+    ].join('\n');
+  }
+
+  function P3() {
+    var tm = team();
+    var mates = tm ? tm.members.map(function (m) { return m[0] + '(' + m[1] + ')'; }).filter(function (x) { return x.indexOf(t(S.company) + '(') !== 0 || !t(S.company); }).join(', ') : NA;
+    return [
+      '# 역할',
+      '당신은 관광기업 간 협업을 연결하고 후속 실행을 관리하는 협업 코디네이터입니다.',
+      '',
+      '# 목표',
+      '이 상품에서 \'내 회사(' + v(S.company) + ')\'가 해야 할 일을 정리하고, 워크숍 직후 바로 보낼 수 있는 협업 제안 메시지까지 준비합니다.',
+      '',
+      ctxMe(),
+      '',
+      '[이 상품과 협업 정보]',
+      '- 참고 자료: 이 채팅창의 연계 상품 기획서(①번)와 여행사 소개서(②번) 결과',
+      '- 상품명: ' + v(S.r1Name),
+      '- 결과판 ④ 참여 회원사·역할: ' + v(S.r4),
+      '- 조원 회사: ' + (mates || NA),
+      '- 결과판 ⑥ 후속 과제: ' + v(S.r6Follow),
+      '- 여행사가 우선 확인할 보완 사항(발표 코멘트): ' + v(S.fbI),
+      '- 다른 조 중 협업 희망 회사: ' + v(S.other),
+      '- 내 회사의 이번 주 실행 과제: ' + v(S.week),
+      '',
+      '# 진행 순서',
+      'STEP 1. 내 회사 역할 요약: 이 상품에서 내 회사가 맡는 역할, 제공 서비스, 다른 회사에 기대는 부분을 3~5줄로 정리합니다.',
+      'STEP 2. 실행 체크리스트',
+      '  - 이번 주(2026. 11. 2.~11. 8.): 입력한 \'이번 주 실행 과제\'를 첫 항목으로 두고 3~5개',
+      '  - 11월 중(~2026. 11. 30.): 3~5개',
+      '  - 항목마다: 할 일 / 내부 담당(모르면 \'(확인 필요)\') / 함께할 회사 / 완료 기준',
+      'STEP 3. 협업 제안 메시지 초안 2종',
+      '  - 받는 곳: 조원 회사와 협업 희망 회사. 회사별로 요청 내용이 다르면 회사별로 나눠 씁니다. 회사명이 없으면 \'[회사명]\'으로 비워 둡니다.',
+      '  - ① 카카오톡용 짧은 버전: 5줄 이내. 인사 → 워크숍 언급 → 제안 내용 1줄 → 요청 1개(회신 기한은 \'[날짜]\'로 비워 둠)',
+      '  - ② 이메일용: 제목 + 본문(인사, 워크숍 배경, 상품 개요 3줄, 귀사에 요청드리는 사항, 다음 단계, 서명란 [이름/직함/연락처])',
+      '  - 메시지 안에서 협업은 \'제안 단계\'로 표현하고, 확정된 것처럼 쓰지 않습니다.',
+      'STEP 4. 내부 보고용 3줄 요약: ① 무엇을 기획했나 ② 우리 회사 역할과 기대 효과(수치 없이) ③ 다음 할 일과 필요한 의사결정',
+      '',
+      RULES,
+      '7. 입력에 없는 약속·일정·금액은 만들지 않는다. 날짜·금액·인원이 필요하면 \'[ ]\' 빈칸으로 둔다.',
+      '',
+      '# 출력 형식',
+      '- 마크다운 제목(##)으로 STEP 1~4를 나눕니다.',
+      '- 체크리스트는 표로, 메시지 초안은 복사하기 쉽게 각각 코드 블록 없이 인용(>) 형식으로 씁니다.'
+    ].join('\n');
+  }
+
+  function P4() {
+    var tm = team();
+    return [
+      '# 역할',
+      '당신은 비즈니스 문서를 웹 문서로 정리하는 문서 디자이너 겸 퍼블리셔입니다.',
+      '',
+      '# 목표',
+      '이 채팅창의 ①상품 기획서, ②여행사 제안서, ③내 회사 실행 플랜 결과를 하나의 단일 HTML 파일로 묶어, 참가자가 저장·공유·인쇄할 수 있는 보관본을 만듭니다.',
+      '',
+      '[입력 정보]',
+      '- 문서 제목: ' + v(S.r1Name) + ' — 연계 상품 기획 보관본',
+      '- 조·테마·타깃: ' + (S.team ? S.team + '조' : NA) + ' / ' + (tm ? tm.theme : NA) + ' / ' + (tm ? tm.target : NA),
+      '- 작성 회사: ' + v(S.company),
+      '- 작성일: ' + DATE,
+      '- 행사: 2026 알람아라비코리아 하반기 2차 세미나 · 부산 중동 타깃 연계 상품화 워크숍',
+      '- 본문 재료: 이 채팅창의 ①~③ 결과(수정 요청이 있었다면 가장 마지막 수정본)',
+      '- 원본 아이디어 기록: 아래 [원본 입력값]을 고치거나 요약하지 말고 그대로 보존합니다.',
+      '',
+      '[원본 입력값]',
+      dump({ header: false }),
+      '',
+      '# 진행 순서',
+      'STEP 1. 아래 순서로 섹션을 만듭니다.',
+      '  1) 표지: 상품명, 조·테마, 타깃, 작성 회사, 작성일 ' + DATE + ', 행사명, \'제안 단계 문서\' 표기',
+      '  2) 목차(각 섹션으로 이동하는 링크)',
+      '  3) 상품 기획서(①)',
+      '  4) 여행사 제안서 — 국문 / English(②)',
+      '  5) 내 회사 실행 플랜(③)',
+      '  6) 회원사 확인 질문 목록: ①의 확인 질문, ②의 발송 전 체크리스트, 본문에 남은 \'(확인 필요)\' 항목을 모아 체크박스 목록으로',
+      '  7) 원본 아이디어 기록: [원본 입력값]을 항목명과 함께 그대로',
+      'STEP 2. ①~③의 내용은 의미를 바꾸지 않고 옮깁니다. \'(확인 필요)\' 표시는 지우지 않고 눈에 띄게 표시합니다.',
+      'STEP 3. 아래 디자인 규격으로 HTML을 작성합니다.',
+      '',
+      '# 디자인 규격',
+      '- 단일 HTML 파일. CSS는 <style> 안에 넣고 외부 JS는 쓰지 않습니다. 외부 리소스는 Pretendard 웹폰트 CDN만 허용합니다.',
+      '- 흰 배경, 본문 글자색 #222 계열, 강조색은 #0A7281 하나만 씁니다(제목 포인트, 표 머리, 번호). 다른 강조색은 쓰지 않습니다.',
+      '- 폰트: font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;',
+      '- 한글 줄바꿈: word-break: keep-all; overflow-wrap: break-word;',
+      '- 반응형: 본문 최대 폭 880px 가운데 정렬, 모바일 좌우 여백 16px, 가로 스크롤이 생기지 않게 합니다.',
+      '- 표: 640px 이하에서는 행마다 세로 카드로 바뀌게 합니다(각 셀 앞에 data-label 속성으로 열 이름 표시).',
+      '- 인쇄: @media print 에서 A4(@page size A4, 여백 15mm), 주요 섹션마다 page-break-before, 표·카드가 중간에 잘리지 않게 break-inside: avoid, 목차 링크 밑줄 제거, 배경색 유지(print-color-adjust: exact).',
+      '- \'(확인 필요)\'는 연한 배경의 배지 형태로 표시합니다.',
+      '',
+      RULES,
+      '',
+      '# 출력 형식',
+      '- 설명 없이 완성된 HTML 코드 전체를 하나의 파일로 출력합니다.',
+      '- 파일명: ' + fileSafe(t(S.r1Name) || '연계상품') + '_보관본_20261102.html',
+      '',
+      '위 내용을 하나의 HTML 파일로 만들어 주세요. Claude에서는 다운로드할 수 있는 HTML 파일(아티팩트)로 만들어 주세요.'
+    ].join('\n');
+  }
+
+  var PROMPTS = [
+    { no: 1, title: '상품 기획서 고도화', use: '결과판 초안 → 회원사 내부 보고용 연계 상품 기획서', tip: '결과판 사진을 함께 첨부하면 빠진 칸을 사진에서 보완합니다.', fn: P1 },
+    { no: 2, title: '중동 여행사 제안용 상품 소개서', use: '①의 기획서 → 1페이지 B2B 소개서(국문·영문)', tip: '①의 답변을 받은 뒤 같은 채팅창에 붙여넣으세요. 여행사에 보내기 전 일정·조건은 회원사와 꼭 확인하세요.', fn: P2 },
+    { no: 3, title: '내 회사 후속 실행 플랜', use: '내 회사 할 일 체크리스트 + 협업 제안 메시지(카톡·이메일) + 내부 보고 3줄', tip: '협업 메시지는 보내기 전에 회사명·요청 내용을 한 번 더 확인하세요.', fn: P3 },
+    { no: 4, title: '통합 HTML 보관본', use: '①~③ 결과 + 원본 입력값 → 인쇄·공유용 단일 HTML 문서', tip: 'Claude에서 HTML 파일로 받은 뒤 다운로드해 보관하세요. 브라우저에서 열어 인쇄(PDF 저장)도 됩니다.', fn: P4 }
+  ];
+
+  /* ---------- dump / import ---------- */
+  function fieldValue(k) {
+    if (k === 'team') return S.team ? S.team + '조' + (team() ? ' — ' + team().theme : '') : '';
+    if (k === 'role') return S.role ? ROLES[S.role] : '';
+    if (k === 'muslim') return muslimText();
+    return t(S[k]);
+  }
+  function dump(opt) {
+    opt = opt || {};
+    var lines = [];
+    if (opt.header !== false) {
+      lines.push(opt.boardOnly ? '■ 중동 상품화 워크숍 결과판 (' + DATE + ')' : '■ 중동 상품화 워크숍 입력 기록 (' + DATE + ')');
+    }
+    var lastStep = 0;
+    FIELDS.forEach(function (f) {
+      if (opt.boardOnly && !f.board) return;
+      if (!opt.boardOnly && f.step !== lastStep) {
+        lastStep = f.step;
+        lines.push('■ STEP ' + f.step + ' ' + STEP_TITLES[f.step - 1]);
+      }
+      lines.push('[' + f.label + '] ' + (fieldValue(f.k) || '-'));
+    });
+    return lines.join('\n');
+  }
+  function parseDump(text) {
+    var labelMap = {};
+    FIELDS.forEach(function (f) { labelMap[f.label] = f.k; });
+    var out = {}, cur = null;
+    String(text || '').replace(/\r/g, '').split('\n').forEach(function (line) {
+      var m = line.match(/^\s*\[([^\]]+)\]\s?(.*)$/);
+      if (m && labelMap[m[1].trim()]) {
+        cur = labelMap[m[1].trim()];
+        out[cur] = m[2];
+      } else if (/^\s*■/.test(line)) {
+        cur = null;
+      } else if (cur) {
+        out[cur] += '\n' + line;
+      }
+    });
+    Object.keys(out).forEach(function (k) {
+      out[k] = out[k].trim();
+      if (out[k] === '-') out[k] = '';
+    });
+    return out;
+  }
+  function importBoard(text) {
+    var d = parseDump(text);
+    var keys = Object.keys(d);
+    if (!keys.length) return 0;
+    var n = 0;
+    FIELDS.forEach(function (f) {
+      if (!f.board || !(f.k in d)) return;
+      var val = d[f.k];
+      if (f.k === 'team') {
+        var mm = val.match(/[123]/);
+        if (mm) { S.team = mm[0]; n++; }
+      } else if (f.k === 'muslim') {
+        MUSLIM.forEach(function (m) { S[m[0]] = val.indexOf(m[1]) !== -1; });
+        n++;
+      } else {
+        S[f.k] = val; n++;
+      }
+    });
+    return n;
+  }
+
+  /* ---------- copy / download ---------- */
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) { return false; }
+  }
+  function selectEl(node) {
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(node);
+      var sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(r);
+    } catch (e) { /* ignore */ }
+  }
+  // 복사 성공 시 onOk, 실패 시 selectNode(있으면)를 전체 선택해 손으로 복사하도록 안내
+  function copyText(text, okMsg, selectNode) {
+    var fail = function () {
+      if (fallbackCopy(text)) { toast(okMsg); return; }
+      if (selectNode) {
+        selectNode.classList.add('open');
+        selectEl(selectNode);
+        selectNode.scrollIntoView({ block: 'center' });
+        toast('자동 복사가 막혀 있어요. 선택된 글을 길게 눌러 복사해 주세요.');
+      } else {
+        toast('복사하지 못했어요. .txt 저장을 이용해 주세요.');
+      }
+    };
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function () { toast(okMsg); }, fail);
+      } else { fail(); }
+    } catch (e) { fail(); }
+  }
+  function fileSafe(s) { return String(s).replace(/[\\/:*?"<>|\s]+/g, '_').slice(0, 40); }
+  function downloadTxt() {
+    try {
+      var text = dump();
+      var blob = new Blob(['﻿' + text], { type: 'text/plain;charset=utf-8' });
+      // 한글 파일명은 일부 브라우저에서 'download'로 바뀌므로 영문 고정 + 시각으로 구분
+      var now = new Date();
+      var hhmm = ('0' + now.getHours()).slice(-2) + ('0' + now.getMinutes()).slice(-2);
+      var name = 'mideast-workshop_' + (S.team ? 'team' + S.team + '_' : '') + '20261102_' + hhmm + '.txt';
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      toast('.txt 파일을 저장했어요.');
+    } catch (e) {
+      toast('저장하지 못했어요. ‘입력 내용 전체 복사’를 이용해 주세요.');
+    }
+  }
+
+  /* ---------- step 5 rendering ---------- */
+  var promptCache = [];
+  function renderPrompts() {
+    var box = $('#prompts');
+    box.textContent = '';
+    promptCache = PROMPTS.map(function (p) { return p.fn(); });
+    PROMPTS.forEach(function (p, i) {
+      var text = promptCache[i];
+      var card = el('article', { 'class': 'pcard', id: 'prompt-' + p.no });
+      var ph = el('div', { 'class': 'ph' });
+      ph.appendChild(el('span', { 'class': 'pno', 'aria-hidden': 'true' }, ['①', '②', '③', '④'][i]));
+      var hd = el('div');
+      hd.appendChild(el('h3', null, p.no + '. ' + p.title));
+      hd.appendChild(el('p', { 'class': 'use' }, '용도: ' + p.use));
+      ph.appendChild(hd);
+      card.appendChild(ph);
+      var pb = el('div', { 'class': 'pb' });
+      pb.appendChild(el('p', { 'class': 'tip' }, '💡 ' + p.tip));
+      var pre = el('pre', { tabindex: '0', 'aria-label': p.title + ' 프롬프트 본문' }, text);
+      pb.appendChild(pre);
+      pb.appendChild(el('p', { 'class': 'len' }, text.length.toLocaleString() + '자'));
+      var acts = el('div', { 'class': 'acts' });
+      var bc = el('button', { type: 'button', 'class': 'btn', 'data-copy': i }, p.no + '번 프롬프트 복사');
+      var bt = el('button', { type: 'button', 'class': 'btn plain', 'data-toggle': i }, '펼쳐 보기');
+      acts.appendChild(bc); acts.appendChild(bt);
+      pb.appendChild(acts);
+      card.appendChild(pb);
+      box.appendChild(card);
+    });
+
+    var warn = [];
+    if (!S.team) warn.push('조를 선택하지 않았습니다(STEP 1).');
+    if (!t(S.company)) warn.push('내 회사명이 비어 있습니다(STEP 1).');
+    var w = $('#basicWarn');
+    if (warn.length) { w.hidden = false; w.textContent = '⚠ ' + warn.join(' ') + ' 비어 있는 항목은 ‘(확인 필요)’로 들어갑니다.'; }
+    else { w.hidden = true; w.textContent = ''; }
+  }
+
+  /* ---------- navigation ---------- */
+  function stepDone(n) {
+    if (n === 1) return !!(S.team && t(S.company));
+    if (n === 2) return ['y1', 'y2', 'y3', 'p1', 'p2', 'p3'].some(function (k) { return t(S[k]); });
+    if (n === 3) return completion() >= 50;
+    if (n === 4) return ['fbS', 'fbI', 'other', 'week'].some(function (k) { return t(S[k]); });
+    return false;
+  }
+  function renderNav() {
+    var cur = S.step || 1;
+    $$('[data-go]').forEach(function (b) {
+      var n = +b.getAttribute('data-go');
+      b.classList.toggle('on', n === cur);
+      b.classList.toggle('done', n !== cur && stepDone(n));
+      if (n === cur) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    $('#btnPrev').disabled = cur === 1;
+    var next = $('#btnNext');
+    if (cur === 4) next.textContent = '프롬프트 만들기';
+    else if (cur === 5) next.textContent = '①번 프롬프트 복사';
+    else next.textContent = '다음 · ' + STEP_SHORT[cur];
+  }
+  function goStep(n, noScroll) {
+    n = Math.max(1, Math.min(5, n));
+    S.step = n;
+    $$('.step').forEach(function (s) { s.classList.toggle('on', +s.getAttribute('data-step') === n); });
+    if (n === 5) renderPrompts();
+    renderMeter();
+    renderNav();
+    if (hasData()) save();
+    if (!noScroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ---------- modal ---------- */
+  var lastFocus = null;
+  function openModal(id) {
+    lastFocus = document.activeElement;
+    var m = $(id);
+    m.classList.add('on');
+    var f = $('textarea', m) || $('[data-close]', m);
+    if (f) f.focus();
+  }
+  function closeModal(m) {
+    m.classList.remove('on');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  /* ---------- reset ---------- */
+  function resetAll() {
+    S = {};
+    try { window.localStorage.removeItem(STORE_KEY); } catch (e) { /* ignore */ }
+    clearTimeout(saveTimer);
+    $$('input, textarea').forEach(function (inp) {
+      if (inp.type === 'checkbox' || inp.type === 'radio') inp.checked = false;
+      else inp.value = '';
+    });
+    renderTeam();
+    applyPlaceholders();
+    renderMuslim();
+    goStep(1);
+    toast('모든 입력을 지웠어요. 처음부터 시작합니다.');
+  }
+
+  /* ---------- events ---------- */
+  function onField(e) {
+    var inp = e.target;
+    var k = inp.getAttribute('data-k');
+    if (k) {
+      S[k] = inp.type === 'checkbox' ? inp.checked : inp.value;
+      if (k === 'company') renderTeam();
+      if (k.charAt(0) === 'm' && MUSLIM.some(function (m) { return m[0] === k; })) renderMuslim();
+    }
+    var r = inp.getAttribute('data-radio');
+    if (r && inp.checked) {
+      S[r] = inp.value;
+      if (r === 'team') { renderTeam(); applyPlaceholders(); }
+    }
+    renderMeter();
+    renderNav();
+    save();
+  }
+
+  function bind() {
+    document.addEventListener('input', onField);
+    document.addEventListener('change', function (e) {
+      if (e.target.type === 'checkbox' || e.target.type === 'radio') onField(e);
+    });
+
+    document.addEventListener('click', function (e) {
+      var go = e.target.closest('[data-go]');
+      if (go) { goStep(+go.getAttribute('data-go')); return; }
+
+      var chip = e.target.closest('[data-co]');
+      if (chip) {
+        S.company = chip.getAttribute('data-co');
+        S.role = chip.getAttribute('data-role');
+        fillForm(); renderTeam(); renderMeter(); renderNav(); save();
+        toast(S.company + ' · 역할 ' + S.role + '(으)로 입력했어요.');
+        return;
+      }
+
+      var cp = e.target.closest('[data-copy]');
+      if (cp) {
+        var i = +cp.getAttribute('data-copy');
+        var pre = $('#prompt-' + (i + 1) + ' pre');
+        copyText(promptCache[i], (i + 1) + '번 프롬프트를 복사했어요. AI 채팅창에 붙여넣으세요.', pre);
+        return;
+      }
+      var tg = e.target.closest('[data-toggle]');
+      if (tg) {
+        var p = $('#prompt-' + (+tg.getAttribute('data-toggle') + 1) + ' pre');
+        var open = p.classList.toggle('open');
+        tg.textContent = open ? '접기' : '펼쳐 보기';
+        return;
+      }
+
+      if (e.target.closest('[data-reset]')) { openModal('#resetModal'); return; }
+      if (e.target.closest('[data-close]')) { closeModal(e.target.closest('.modal')); return; }
+      if (e.target.classList && e.target.classList.contains('modal')) { closeModal(e.target); return; }
+    });
+
+    $('#btnPrev').addEventListener('click', function () { goStep((S.step || 1) - 1); });
+    $('#btnNext').addEventListener('click', function () {
+      var cur = S.step || 1;
+      if (cur === 5) {
+        copyText(promptCache[0], '①번 프롬프트를 복사했어요. AI 채팅창에 붙여넣으세요.', $('#prompt-1 pre'));
+        return;
+      }
+      goStep(cur + 1);
+    });
+
+    $('#btnResetOk').addEventListener('click', function () {
+      closeModal($('#resetModal'));
+      resetAll();
+    });
+
+    $('#btnBoardCopy').addEventListener('click', function () {
+      copyText(dump({ boardOnly: true }), '결과판을 복사했어요. 조 단톡방에 붙여넣어 공유하세요.', null);
+    });
+    $('#btnBoardImport').addEventListener('click', function () {
+      $('#importText').value = '';
+      openModal('#importModal');
+    });
+    $('#btnImportOk').addEventListener('click', function () {
+      var n = importBoard($('#importText').value);
+      if (!n) { toast('결과판 형식을 찾지 못했어요. ‘결과판 복사’ 내용을 통째로 붙여넣어 주세요.'); return; }
+      fillForm(); renderTeam(); applyPlaceholders(); renderMuslim(); renderMeter(); renderNav(); save();
+      closeModal($('#importModal'));
+      toast('결과판 ' + n + '개 항목을 채웠어요.');
+    });
+
+    $('#btnCopyAll').addEventListener('click', function () {
+      copyText(dump(), '입력 내용을 복사했어요. 카카오톡 ‘나와의 채팅’에 붙여넣어 보관하세요.', null);
+    });
+    $('#btnTxt').addEventListener('click', downloadTxt);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { $$('.modal.on').forEach(closeModal); }
+    });
+    window.addEventListener('pagehide', saveNow);
+  }
+
+  /* ---------- init ---------- */
+  buildTeamChoices();
+  buildMuslimChecks();
+  buildSteps();
+  fillForm();
+  renderTeam();
+  applyPlaceholders();
+  renderMuslim();
+  bind();
+  goStep(S.step || 1, true);
+
+  // 테스트·점검용 (콘솔에서 확인 가능)
+  window.__maker = { prompts: function () { return PROMPTS.map(function (p) { return p.fn(); }); }, dump: dump, state: function () { return S; } };
+})();
+</script>
+</body>
+</html>
